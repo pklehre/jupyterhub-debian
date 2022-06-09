@@ -21,7 +21,7 @@
 # your jupyterhub_config.py will be added automatically
 # from your docker directory.
 
-ARG BASE_IMAGE=ubuntu:focal-20200729
+ARG BASE_IMAGE=debian
 FROM $BASE_IMAGE AS builder
 
 USER root
@@ -75,9 +75,9 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 ENV SHELL=/bin/bash \
-    LC_ALL=en_US.UTF-8 \
-    LANG=en_US.UTF-8 \
-    LANGUAGE=en_US.UTF-8
+    LC_ALL=en_GB.UTF-8 \
+    LANG=en_GB.UTF-8 \
+    LANGUAGE=en_GB.UTF-8
 
 RUN  locale-gen $LC_ALL
 
@@ -93,6 +93,15 @@ RUN python3 -m pip install --no-cache /tmp/wheelhouse/*
 
 RUN mkdir -p /srv/jupyterhub/
 WORKDIR /srv/jupyterhub/
+
+COPY jupyterhub_config.py /srv/jupyterhub/
+
+# create user
+RUN useradd -ms /bin/bash labadmin
+RUN echo "labadmin:test123" | chpasswd 
+
+# install jupyterlab
+RUN python3 -m pip install jupyterlab
 
 EXPOSE 8000
 

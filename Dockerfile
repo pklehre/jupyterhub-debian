@@ -41,7 +41,7 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m pip install --upgrade setuptools pip wheel
+RUN pip3 install --break-system-packages --upgrade setuptools pip wheel
 
 # copy everything except whats in .dockerignore, its a
 # compromise between needing to rebuild and maintaining
@@ -82,14 +82,14 @@ ENV SHELL=/bin/bash \
 RUN  locale-gen $LC_ALL
 
 # always make sure pip is up to date!
-RUN python3 -m pip install --no-cache --upgrade setuptools pip
+RUN pip3 install --break-system-packages --no-cache --upgrade setuptools pip
 
 RUN npm install -g configurable-http-proxy@^4.2.0 \
  && rm -rf ~/.npm
 
 # install the wheels we built in the first stage
 COPY --from=builder /src/jupyterhub/wheelhouse /tmp/wheelhouse
-RUN python3 -m pip install --no-cache /tmp/wheelhouse/*
+RUN pip3 install --break-system-packages --no-cache /tmp/wheelhouse/*
 
 RUN mkdir -p /srv/jupyterhub/
 WORKDIR /srv/jupyterhub/
@@ -101,7 +101,7 @@ RUN useradd -ms /bin/bash labadmin
 RUN echo "labadmin:test123" | chpasswd 
 
 # install jupyterlab
-RUN python3 -m pip install jupyterlab
+RUN pip3 install --break-system-packages jupyterlab
 
 EXPOSE 8000
 

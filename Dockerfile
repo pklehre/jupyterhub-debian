@@ -21,7 +21,7 @@
 # your jupyterhub_config.py will be added automatically
 # from your docker directory.
 
-ARG BASE_IMAGE=debian:bullseye
+ARG BASE_IMAGE=debian:bookworm
 FROM $BASE_IMAGE AS builder
 
 USER root

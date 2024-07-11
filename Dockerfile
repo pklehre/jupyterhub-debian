@@ -21,7 +21,8 @@
 # your jupyterhub_config.py will be added automatically
 # from your docker directory.
 
-ARG BASE_IMAGE=debian:bookworm
+#ARG BASE_IMAGE=debian:bookworm
+ARG BASE_IMAGE=ocaml/opam:debian-ocaml-5.1-flambda
 FROM $BASE_IMAGE AS builder
 
 USER root

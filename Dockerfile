@@ -22,7 +22,7 @@
 # from your docker directory.
 
 #ARG BASE_IMAGE=debian:bookworm
-ARG BASE_IMAGE=ocaml/opam:debian-ocaml-5.1-flambda
+ARG BASE_IMAGE=ocaml/opam:debian-ocaml-5.0-flambda
 FROM $BASE_IMAGE AS builder
 
 USER root

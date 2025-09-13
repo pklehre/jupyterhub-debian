@@ -100,6 +100,15 @@ RUN  locale-gen $LC_ALL
 # always make sure pip is up to date!
 # RUN pip3 install --break-system-packages --no-cache --upgrade setuptools pip
 
+RUN apt-get update && apt-get install -yq --no-install-recommends \
+    python3 \
+    curl \
+ && apt-get remove -y python3-pip \
+ && curl -sS https://bootstrap.pypa.io/get-pip.py | python3 \
+ && pip3 install --no-cache --upgrade --break-system-packages setuptools pip \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
 RUN npm install -g configurable-http-proxy@^4.2.0 \
  && rm -rf ~/.npm
 

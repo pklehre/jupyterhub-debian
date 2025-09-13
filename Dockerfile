@@ -99,7 +99,7 @@ ENV SHELL=/bin/bash \
 RUN  locale-gen $LC_ALL
 
 # always make sure pip is up to date!
-RUN pip3 install --break-system-packages --no-cache --upgrade setuptools pip
+# RUN pip3 install --break-system-packages --no-cache --upgrade setuptools pip
 
 RUN npm install -g configurable-http-proxy@^4.2.0 \
  && rm -rf ~/.npm

@@ -38,7 +38,7 @@ RUN apt-get update \
     python3-pycurl \
     nodejs \
     npm \
-    yarn \
+    yarnpkg \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 

@@ -78,17 +78,39 @@ USER root
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
+    # Add build tools to prevent future errors
+    build-essential \
+    python3-dev \
+    # Your existing packages
     ca-certificates \
     curl \
     gnupg \
     locales \
+    python3 \
     python3-pycurl \
     nodejs \
     npm \
+ # Now, immediately install pip correctly in the same step
+ && curl -sS https://bootstrap.pypa.io/get-pip.py | python3 \
+ && pip3 install --no-cache --upgrade --break-system-packages setuptools pip \
+ # Finally, clean up
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
+
+# RUN apt-get update \
+#  && apt-get install -yq --no-install-recommends \
+#     ca-certificates \
+#     curl \
+#     gnupg \
+#     locales \
+#     python3-pycurl \
+#     nodejs \
+#     npm \
+#  && apt-get clean \
+#  && rm -rf /var/lib/apt/lists/*
 
 ENV SHELL=/bin/bash \
     LC_ALL=en_GB.UTF-8 \
@@ -100,13 +122,13 @@ RUN  locale-gen $LC_ALL
 # always make sure pip is up to date!
 # RUN pip3 install --break-system-packages --no-cache --upgrade setuptools pip
 
-RUN apt-get update && apt-get install -yq --no-install-recommends \
-    python3 \
-    curl \
- && apt-get remove -y python3-pip \
- && curl -sS https://bootstrap.pypa.io/get-pip.py | python3 \
- && pip3 install --no-cache --upgrade --break-system-packages setuptools pip \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -yq --no-install-recommends \
+#     python3 \
+#     curl \
+#  && apt-get remove -y python3-pip \
+#  && curl -sS https://bootstrap.pypa.io/get-pip.py | python3 \
+#  && pip3 install --no-cache --upgrade --break-system-packages setuptools pip \
+#  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
 RUN npm install -g configurable-http-proxy@^4.2.0 \

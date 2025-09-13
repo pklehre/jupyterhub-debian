@@ -84,7 +84,6 @@ RUN apt-get update \
     curl \
     gnupg \
     locales \
-    python3-pip \
     python3-pycurl \
     nodejs \
     npm \

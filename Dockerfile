@@ -29,6 +29,7 @@ USER root
 
 ENV DEBIAN_FRONTEND noninteractive
 
+
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     build-essential \
@@ -39,24 +40,13 @@ RUN apt-get update \
     nodejs \
     npm \
     yarnpkg \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-
-# This command now also removes python3-pip
-RUN apt-get update && apt-get install -yq --no-install-recommends \
-    ca-certificates \
     curl \
-    gnupg \
- && apt-get remove -y python3-pip \
+ # Pass the flag to the get-pip.py script itself
+ && curl -sS https://bootstrap.pypa.io/get-pip.py | python3 - --break-system-packages \
+ # The pip install command still needs the flag as well
+ && pip3 install --no-cache --upgrade --break-system-packages setuptools pip \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get install -y curl \
- && apt-get remove -y python3-pip \
- && curl -sS https://bootstrap.pypa.io/get-pip.py | python3 \
- && pip3 install --no-cache --upgrade --break-system-packages setuptools pip \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
-
 
 RUN pip3 install --break-system-packages --upgrade setuptools wheel
 

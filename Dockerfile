@@ -34,7 +34,6 @@ RUN apt-get update \
     ca-certificates \
     locales \
     python3-dev \
-    python3-pip \
     python3-pycurl \
     nodejs \
     npm \
@@ -42,7 +41,14 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install --break-system-packages --upgrade setuptools pip wheel
+RUN apt-get update && apt-get install -y curl \
+ && apt-get remove -y python3-pip \
+ && curl -sS https://bootstrap.pypa.io/get-pip.py | python3 \
+ && pip3 install --no-cache --upgrade setuptools pip \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
+RUN pip3 install --break-system-packages --upgrade setuptools wheel
 
 # copy everything except whats in .dockerignore, its a
 # compromise between needing to rebuild and maintaining

@@ -28,6 +28,7 @@ FROM $BASE_IMAGE AS builder
 USER root
 
 ENV DEBIAN_FRONTEND noninteractive
+
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     build-essential \
@@ -38,6 +39,15 @@ RUN apt-get update \
     nodejs \
     npm \
     yarnpkg \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+# This command now also removes python3-pip
+RUN apt-get update && apt-get install -yq --no-install-recommends \
+    ca-certificates \
+    curl \
+    gnupg \
+ && apt-get remove -y python3-pip \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 

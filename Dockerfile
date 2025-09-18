@@ -32,6 +32,9 @@ ENV DEBIAN_FRONTEND noninteractive
 #RUN mv -i /etc/apt/trusted.gpg.d/debian-archive-*.asc  /root/
 #RUN ln -s /usr/share/keyrings/debian-archive-* /etc/apt/trusted.gpg.d/
 
+RUN apt-get update && \
+    apt-get install -y --allow-unauthenticated debian-archive-keyring
+
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     gnupg \

@@ -29,15 +29,15 @@ USER root
 
 ENV DEBIAN_FRONTEND noninteractive
 
-#RUN mv -i /etc/apt/trusted.gpg.d/debian-archive-*.asc  /root/
-#RUN ln -s /usr/share/keyrings/debian-archive-* /etc/apt/trusted.gpg.d/
+RUN mv -i /etc/apt/trusted.gpg.d/debian-archive-*.asc  /root/
+RUN ln -s /usr/share/keyrings/debian-archive-* /etc/apt/trusted.gpg.d/
 
 
 # Step 1: Install gnupg, the tool needed to manage keys.
-RUN apt-get update && apt-get install -y --no-install-recommends gnupg
+#RUN apt-get update && apt-get install -y --no-install-recommends gnupg
 
 # Step 2: Manually fetch and add the specific missing keys from the error log.
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6ED0E7B82643E131 78DBA3BC47EF2265 F8D2585B8783D481
+#RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6ED0E7B82643E131 78DBA3BC47EF2265 F8D2585B8783D481
 
 
 RUN apt-get update \

@@ -40,9 +40,9 @@ ENV DEBIAN_FRONTEND noninteractive
 #RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6ED0E7B82643E131 78DBA3BC47EF2265 F8D2585B8783D481
 
 
-
-RUN apt-get update && \
+RUN apt-get update -o Acquire::AllowInsecureRepositories=true && \
     apt-get install -y --allow-unauthenticated debian-archive-keyring
+
 
 
 RUN apt-get update \

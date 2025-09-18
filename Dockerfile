@@ -83,6 +83,10 @@ USER root
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN apt-get update -o Acquire::AllowInsecureRepositories=true && \
+    apt-get install -y --allow-unauthenticated debian-archive-keyring
+
+
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     build-essential \
